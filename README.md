@@ -1,3 +1,2 @@
 # Numerical-Methods-II
-## Done: 
-* Backward, Forward and Centered Difference
+* Numerical differentiation and integration techniques
