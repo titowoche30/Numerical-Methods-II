@@ -1,70 +1,76 @@
 import math
 
-def x(a, b, c):
-    return ((a+b)/2)+((b-a)/2)*c
+def x(xi, xf, ak):
+    return ((xi+xf)/2)+((xf-xi)/2)*ak
 
-def GaussL2(a, b):
+def GaussL2(a, b,f):
     c=-(1/3)**(1/2)
     d=(1/3)**(1/2)
     return ((b-a)/2)*(f(x(a, b, c))+f(x(a, b, d)))
 
-def GaussL3(a, b):
+def GaussL3(a, b,f):
+    w1 = 5/9
+    w2 = 8/9
     c=-(3/5)**(1/2)
     d=0
     e=(3/5)**(1/2)
-    return ((b-a)/2)*((f(x(a, b, c))*((5)/(9)))+(f(x(a, b, d))*((8)/(9)))+(f(x(a, b, e))*((5)/(9))))
+    return ((b-a)/2)*((f(x(a, b, c))*w1)+(f(x(a, b, d))*w2)+(f(x(a, b, e))*w1))
 
-def GaussL4(a, b):
+def GaussL4(a, b,f):
+    w1 = (1/2)-(math.sqrt(5/6))/6
+    w2 = (1/36)*(18+math.sqrt(30))
     c=-((3+2*(6/5)**(1/2))/7)**(1/2)
     d=-((3-2*(6/5)**(1/2))/7)**(1/2)
     e=((3-2*(6/5)**(1/2))/7)**(1/2)
     g=((3+2*(6/5)**(1/2))/7)**(1/2)
-    return ((b-a)/2)*((f(x(a, b, c))*((1566598950940059)/(4503599627370496)))+(f(x(a, b, d))*((1468500338215219)/(2251799813685248)))+(f(x(a, b, e))*((5874001352860875)/(9007199254740992)))+(f(x(a, b, g))*((3133197901880117)/(9007199254740992))))
+    return ((b-a)/2)*((f(x(a, b, c))*w1+(f(x(a, b, d))*w2+(f(x(a, b, e))*w2+(f(x(a, b, g))*w1)))))
 
 
-def integrate(f,points,a,b):
+
+def integrate(f,grau,a,b):
     '''
     Argumentos:
-        f - normal or lambda function
-        points - number of points  
-        a e b - integration limits
+        f - funcao lambda ou normal
+        grau - numero com o grau 
+        a e b - limites de integração
     '''
     
-    if not 2<=points<=4: 
-        print('{} points not implemented'.format(degree))
+    if not 2<=grau<=4: 
+        print('Grau {} não implementado'.format(grau))
         return 
     
-    tolerance=10E-6
-    result=0
-    difference=1
+    tolerancia=10E-6
+    resultado=0
+    diferenca=1
     n=0
     
-    while(difference>tolerance):
+    while(diferenca>tolerancia):
         l=0
-        aux=result
-        result=0
+        aux=resultado
+        resultado=0
         while(l<2**n):
-            if points == 2:
-                result=result+GaussL2(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n))
-            elif points ==3:
-                result=result+GaussL3(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n))
+            if grau == 2:
+                resultado=resultado+GaussL2(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n),f)
+            elif grau ==3:
+                resultado=resultado+GaussL3(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n),f)
             else:
-                result=result+GaussL4(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n))
+                resultado=resultado+GaussL4(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n),f)
             l=l+1
             
-        difference=abs(result-aux)
+        diferenca=abs(resultado-aux)
         n=n+1
-        print('iteration {} = {}'.format(n,result))
+        print('iteracao {} = {}'.format(n,resultado))
         
-    return result
+    return resultado
 
 if __name__ == '__main__':
     #f = lambda x: x**2
     #f = lambda x: 3*x + 7     
     f = lambda x: (math.sin(2*x) + 4*x**2 + 3*x)**2  
-    points = int(input('Enter the number of points(2,3 or 4)\n'))
-    a = int(input('Enter the a\n'))
-    b = int(input('Enter the b\n'))
+    grau = int(input('Digite o grau(de 2 a 4)\n'))
+    a = int(input('Digite o a\n'))
+    b = int(input('Digite o b\n'))
   
-    result=integrate(f,points,a,b)
-    print('\nresult =',result)
+    print('\n\nIntegral de (sin(2*x) + 4*x^2 + 3*x)^2 de a={} a b={} \n\n'.format(a,b))
+    resultado=integrate(f,grau,a,b)
+    print('\nResultado=',resultado)
