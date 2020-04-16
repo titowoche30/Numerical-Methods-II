@@ -27,16 +27,16 @@ def GaussL4(a, b,f):
 
 
 
-def integrate(f,grau,a,b):
+def integrate(f,points,a,b):
     '''
     Argumentos:
         f - funcao lambda ou normal
-        grau - numero com o grau 
+        points - numero de pontos de interpolacao 
         a e b - limites de integração
     '''
     
-    if not 2<=grau<=4: 
-        print('Grau {} não implementado'.format(grau))
+    if not 2<=points<=4: 
+        print('ponto {} não implementado'.format(points))
         return 
     
     tolerancia=10E-6
@@ -49,9 +49,9 @@ def integrate(f,grau,a,b):
         aux=resultado
         resultado=0
         while(l<2**n):
-            if grau == 2:
+            if points == 2:
                 resultado=resultado+GaussL2(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n),f)
-            elif grau ==3:
+            elif points ==3:
                 resultado=resultado+GaussL3(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n),f)
             else:
                 resultado=resultado+GaussL4(a+(l*(b-a)/2**n), a+((l+1)*(b-a)/2**n),f)
@@ -67,10 +67,10 @@ if __name__ == '__main__':
     #f = lambda x: x**2
     #f = lambda x: 3*x + 7     
     f = lambda x: (math.sin(2*x) + 4*x**2 + 3*x)**2  
-    grau = int(input('Digite o grau(de 2 a 4)\n'))
+    points = int(input('Digite o número de pontos(de 2 a 4)\n'))
     a = int(input('Digite o a\n'))
     b = int(input('Digite o b\n'))
   
     print('\n\nIntegral de (sin(2*x) + 4*x^2 + 3*x)^2 de a={} a b={} \n\n'.format(a,b))
-    resultado=integrate(f,grau,a,b)
+    resultado=integrate(f,points,a,b)
     print('\nResultado=',resultado)
