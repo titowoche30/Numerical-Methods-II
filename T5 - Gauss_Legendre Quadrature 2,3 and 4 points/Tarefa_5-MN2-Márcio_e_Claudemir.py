@@ -67,7 +67,9 @@ if __name__ == '__main__':
     #f = lambda x: x**2
     #f = lambda x: 3*x + 7     
     f = lambda x: (math.sin(2*x) + 4*x**2 + 3*x)**2  
+    #f = lambda x: 1/ ((x**2)**(1/3))
     grau = int(input('Digite o grau do polinomio de Legendre (de 2 a 4)\n'))
+    #a,b = -1,1
     a = int(input('Digite o a\n'))
     b = int(input('Digite o b\n'))
   
