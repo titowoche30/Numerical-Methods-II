@@ -58,7 +58,7 @@ def integrate(f,c,lim_inf,lim_sup,flag_exp=True,many_c=False):
         diferenca=1
         n=0
         a,b = -i,i                       #limites da integral numérica
-        t0=time.time()
+        #t0=time.time()
         while(diferenca>tolerancia):
             l=0
             aux=resultado
@@ -74,10 +74,10 @@ def integrate(f,c,lim_inf,lim_sup,flag_exp=True,many_c=False):
             n=n+1
             print('iteracao {} = {}'.format(n,resultado))
             
-            if time.time() - t0 >= 60:
+            #if time.time() - t0 >= 60:
                 #A partir desse ponto as iterações seguintes melhoram pouca coisa e demoram muito
-                print('Tempo limite atingido')
-                break
+             #   print('Tempo limite atingido')
+             #   break
             
         resultado_c = resultado
         resultados.append((i,resultado_c))
@@ -113,7 +113,11 @@ if __name__ == '__main__':
     int_c = int(input('Como quer usar o c?\n[1]: Usar só um c\n[2]: Vários c\n'))
     if int_c == 1: 
         c = float(input('Digite o c:\n'))
+        t=time.time()
         resultados = integrate(f,c,lim_inf,lim_sup,flag_exp=flag_exp)
+        t=time.time()-t
+        print("c = {} - mean time = {} segundos \n".format(c,t / 3));
+
         print('resultados=\n(c,resultado) \n\n',resultados)
     elif int_c == 2:
         print('\nSerá gerada uma lista com números igualmente espaçados de 1 a c')
